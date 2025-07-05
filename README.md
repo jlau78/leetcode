@@ -2,9 +2,10 @@
 
 ## Summary
 
-Back to coding basics to learn and practice. This repo focuses on Data Structures and Leetcode.
+Back to coding basics to learn and practice. This repo focuses on Data Structures and Leetcode practice.
 
- [Study Notes](https://github.com/jlau78/tips/blob/main/leetcode.tips.md)
+Reference [Study Notes - leetcode.tips.md](https://github.com/jlau78/tips/blob/main/leetcode.tips.md)
+
 
 ##  References
 

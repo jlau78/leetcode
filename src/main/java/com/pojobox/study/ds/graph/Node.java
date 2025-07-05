@@ -1,50 +1,50 @@
 package com.pojobox.study.ds.graph;
 
-public class Node <T> {
+public class Node {
 
   private static final String DELIMITER = ",";
 
   private String id;
 
-  private T value;
+  private String value;
 
-  private String grade;
+  private String value2;
 
-  private String friends;
+  private String edges;
 
-  public Node(String id, T value, String grade, String friends ) {
+  public Node(String id, String value, String value2, String friends ) {
     this.id = id;
     this.value = value;
-    this.grade = grade;
-    this.friends = friends;
+    this.value2 = value2;
+    this.edges = friends;
   }
 
   public String getId() {
     return id;
   }
 
-  public T getValue(){
+  public String getValue(){
     return value;
   };
 
-  public String getGrade() {
-    return this.grade;
+  public String getValue2() {
+    return this.value2;
   }
 
-  public String getFriends() {
-    return this.friends;
+  public String getEdges() {
+    return this.edges;
   }
 
-  public void setValue(T value) {
+  public void setValue(String value) {
     this.value = value;
   }
 
   public String toString() {
     return new StringBuilder("")
-        .append(String.valueOf(this.id)).append(DELIMITER)
-        .append(String.valueOf(this.value)).append(DELIMITER)
-        .append(grade).append(DELIMITER)
-        .append(friends)
+        .append(this.id).append(DELIMITER)
+        .append(this.value).append(DELIMITER)
+        .append(this.value2).append(DELIMITER)
+        .append(this.edges)
         .toString();
   }
 }

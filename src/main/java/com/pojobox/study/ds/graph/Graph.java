@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Learing Graph DS - https://www.youtube.com/watch?v=CBYHwZcbD-s
+ * Learning Graph DS - https://www.youtube.com/watch?v=CBYHwZcbD-s
  */
 public class Graph {
 
@@ -33,27 +33,54 @@ public class Graph {
 
   public void addNode(Node node) {
     Optional.ofNullable(node)
-            .ifPresent( (n) -> {
-                  nodes.add(n);
-                }
-            );
+        .ifPresent((n) -> {
+              nodes.add(n);
+
+              adjList.add(addToAdjList(n));
+            }
+        );
+
+  }
+
+  private LinkedList<Node> addToAdjList(Node node) {
+    LinkedList<Node> list = new LinkedList<>();
+    list.add(node);
+    return list;
   }
 
   public void addEdge(String sourceId, String destId) {
     int sourceNodeIndex = findNodeIndex(sourceId);
     int destNodeIndex = findNodeIndex(destId);
 
+    // matrix
     if (destNodeIndex != -1) {
       matrix[sourceNodeIndex][destNodeIndex] = 1;
     }
+
+    // adjacent list
+    LinkedList<Node> currentList = adjList.get(sourceNodeIndex);
+    Node destNode = adjList.get(destNodeIndex).get(0);
+    currentList.add(destNode);
+
   }
 
-  public boolean hasEdge(int source, int destination) {
-    if (matrix[source][destination] == 1) {
+  public boolean hasEdge(String srcId, String destId) {
+    if (matrix[findNodeIndex(srcId)][findNodeIndex(destId)] == 1) {
       return true;
     } else {
       return false;
     }
+  }
+
+  public boolean hasEdgeInAdjList(String srcId, String destId) {
+    LinkedList<Node> currentList = adjList.get(findNodeIndex(srcId));
+    Node dstNode = adjList.get(findNodeIndex(destId)).get(0);
+
+    Optional<Node> found = currentList.stream()
+        .filter(node -> node.getId().equals(dstNode.getId()))
+        .findFirst();
+
+    return !found.isEmpty();
   }
 
   public Node findNode(int id) {
@@ -101,15 +128,37 @@ public class Graph {
         .forEach(node -> System.out.print(" " + node.getId()));
 
     System.out.println();
-    for (int i=0; i < matrix.length; i++) {
+    for (int i = 0; i < matrix.length; i++) {
 
-      System.out.print((getNodeByIndex(i).getId() + padding ).substring(0,PADDING_SIZE + 1));
+      System.out.print((getNodeByIndex(i).getId() + padding).substring(0, PADDING_SIZE + 1));
 
-      for (int j=0; j < matrix[i].length; j++) {
+      for (int j = 0; j < matrix[i].length; j++) {
         System.out.print(matrix[i][j] + "  ");
       }
       System.out.println();
     }
+  }
+
+  public void printAdjList() {
+
+    adjList.stream()
+        .forEach(node -> {
+          System.out.println();
+          node.stream()
+              .forEach(n -> {
+                System.out.print(n.getId() + " -> ");
+              });
+        });
+  }
+
+  public void printAdjList2() {
+    for (LinkedList<Node> currentList : adjList) {
+      System.out.println();
+      for (Node node: currentList) {
+        System.out.print(node.getId() + " -> ");
+      }
+    }
+
   }
 
 }
